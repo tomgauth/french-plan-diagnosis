@@ -61,6 +61,29 @@ def display_results_on_page(email, current_level, conversations, total_phrases, 
     # Display the graph
     st.pyplot(fig)
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+def display_comparison_graph(current_method_phrases, new_method_phrases, total_phrases, weeks_to_goal):
+    weeks = np.linspace(1, weeks_to_goal, int(weeks_to_goal))
+
+    # Simulate current method progress (slower curve)
+    current_progress = logistic_curve(weeks, current_method_phrases, 0.1, weeks_to_goal / 2)
+
+    # Simulate new method progress (faster curve)
+    new_method_progress = logistic_curve(weeks, new_method_phrases, 0.2, weeks_to_goal / 2)
+
+    fig, ax = plt.subplots()
+    ax.plot(weeks, current_progress, label="Current Method", color="red")
+    ax.plot(weeks, new_method_progress, label="With Our Method", color="green")
+    
+    ax.set_title("Learning Progress Comparison")
+    ax.set_xlabel("Weeks")
+    ax.set_ylabel("Phrases Learned")
+    
+    ax.legend()
+    st.pyplot(fig)
+
 def generate_progress_graph(score):
     # Assuming the score corresponds to a number of weeks
     # Let's assume 12 weeks as an example for the learning plan
